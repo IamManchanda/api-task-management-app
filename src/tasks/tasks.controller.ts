@@ -6,22 +6,37 @@ import {
   Body,
   Param,
   Patch,
+  Query,
 } from "@nestjs/common";
 import { TasksService } from "./tasks.service";
 import { Task, TaskStatus } from "./task.model";
 import { CreateTaskDto } from "./dto/create-task.dto";
+import { ReadTasksFilterDto } from "./dto/read-tasks-filter.dto";
 
 @Controller("/tasks")
 export class TasksController {
   constructor(private tasksService: TasksService) {}
 
   /**
-   * @desc    - Read all tasks.
+   * @desc    - Create new task.
+   * @route   - POST /tasks
+   * @access - Public
+   */
+  @Post()
+  createNewTask(@Body() createTaskDto: CreateTaskDto): Task {
+    return this.tasksService.createNewTask(createTaskDto);
+  }
+
+  /**
+   * @desc    - Read tasks (all or with filters).
    * @route   - GET /tasks
    * @access - Public
    */
   @Get()
-  readAllTasks(): Task[] {
+  readTasks(@Query() filterDto: ReadTasksFilterDto): Task[] {
+    if (Object.keys(filterDto).length) {
+      return this.tasksService.readTasksWithFilters(filterDto);
+    }
     return this.tasksService.readAllTasks();
   }
 
@@ -33,16 +48,6 @@ export class TasksController {
   @Get("/:id")
   readTaskById(@Param("id") id: string): Task {
     return this.tasksService.readTaskById(id);
-  }
-
-  /**
-   * @desc    - Create new task.
-   * @route   - POST /tasks
-   * @access - Public
-   */
-  @Post()
-  createNewTask(@Body() createTaskDto: CreateTaskDto): Task {
-    return this.tasksService.createNewTask(createTaskDto);
   }
 
   /**
