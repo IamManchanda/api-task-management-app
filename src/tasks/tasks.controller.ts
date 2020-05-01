@@ -1,9 +1,9 @@
-import { Controller, Get, Post, Body } from "@nestjs/common";
+import { Controller, Get, Post, Body, Param } from "@nestjs/common";
 import { TasksService } from "./tasks.service";
 import { Task } from "./task.model";
 import { CreateTaskDto } from "./dto/create-task.dto";
 
-@Controller("tasks")
+@Controller("/tasks")
 export class TasksController {
   constructor(private tasksService: TasksService) {}
 
@@ -15,6 +15,16 @@ export class TasksController {
   @Get()
   readAllTasks(): Task[] {
     return this.tasksService.readAllTasks();
+  }
+
+  /**
+   * @desc    - Read single task by id.
+   * @route   - GET /tasks/:id
+   * @access - Public
+   */
+  @Get("/:id")
+  readSingleTaskById(@Param("id") id: string): Task {
+    return this.tasksService.readSingleTaskById(id);
   }
 
   /**
