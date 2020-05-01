@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param } from "@nestjs/common";
+import { Controller, Get, Post, Delete, Body, Param } from "@nestjs/common";
 import { TasksService } from "./tasks.service";
 import { Task } from "./task.model";
 import { CreateTaskDto } from "./dto/create-task.dto";
@@ -18,22 +18,32 @@ export class TasksController {
   }
 
   /**
-   * @desc    - Read single task by id.
+   * @desc    - Read task by id.
    * @route   - GET /tasks/:id
    * @access - Public
    */
   @Get("/:id")
-  readSingleTaskById(@Param("id") id: string): Task {
-    return this.tasksService.readSingleTaskById(id);
+  readTaskById(@Param("id") id: string): Task {
+    return this.tasksService.readTaskById(id);
   }
 
   /**
-   * @desc    - Create single task.
+   * @desc    - Create new task.
    * @route   - POST /tasks
    * @access - Public
    */
   @Post()
-  createSingleTask(@Body() createTaskDto: CreateTaskDto): Task {
-    return this.tasksService.createSingleTask(createTaskDto);
+  createNewTask(@Body() createTaskDto: CreateTaskDto): Task {
+    return this.tasksService.createNewTask(createTaskDto);
+  }
+
+  /**
+   * @desc    - Delete task by id.
+   * @route   - DELETE /tasks/:id
+   * @access - Public
+   */
+  @Delete("/:id")
+  deleteTaskById(@Param("id") id: string): void {
+    this.tasksService.deleteTaskById(id);
   }
 }
