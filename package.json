@@ -1,7 +1,7 @@
 {
   "name": "api_task_management_app",
   "version": "0.0.1",
-  "description": "",
+  "description": "API: Task Managment App with Nest.js",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
