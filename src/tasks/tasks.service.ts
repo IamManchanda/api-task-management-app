@@ -13,6 +13,10 @@ export class TasksService {
     private taskRepository: TaskRepository,
   ) {}
 
+  readTasks(filterDto: ReadTasksFilterDto) {
+    console.log(filterDto);
+  }
+
   async readTaskById(id: number): Promise<Task> {
     const found = await this.taskRepository.findOne(id);
     if (!found) {
@@ -25,6 +29,13 @@ export class TasksService {
     return this.taskRepository.createNewTask(newTaskDto);
   }
 
+  async updateTaskStatusById(id: number, status: TaskStatus): Promise<Task> {
+    const task = await this.readTaskById(id);
+    task.status = status;
+    await task.save();
+    return task;
+  }
+
   async deleteTaskById(id: number): Promise<void> {
     const result = await this.taskRepository.delete(id);
     if (result.affected === 0) {
@@ -33,30 +44,4 @@ export class TasksService {
       );
     }
   }
-
-  /*
-  readAllTasks(): Task[] {
-    return this.tasks;
-  }
-
-  readTasksWithFilters({ status, search }: ReadTasksFilterDto): Task[] {
-    let tasks = this.readAllTasks();
-    if (status) {
-      tasks = tasks.filter(task => task.status === status);
-    }
-    if (search) {
-      tasks = tasks.filter(
-        task =>
-          task.title.includes(search) || task.description.includes(search),
-      );
-    }
-    return tasks;
-  }
-
-  updateTaskStatusById(id: string, status: TaskStatus): Task {
-    const task = this.readTaskById(id);
-    task.status = status;
-    return task;
-  }
- */
 }
