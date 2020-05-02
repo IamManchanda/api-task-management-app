@@ -13,8 +13,8 @@ export class TasksService {
     private taskRepository: TaskRepository,
   ) {}
 
-  readTasks(filterDto: ReadTasksFilterDto) {
-    console.log(filterDto);
+  readTasks(filterDto: ReadTasksFilterDto): Promise<Task[]> {
+    return this.taskRepository.readTasks(filterDto);
   }
 
   async readTaskById(id: number): Promise<Task> {
