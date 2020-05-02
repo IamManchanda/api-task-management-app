@@ -4,6 +4,7 @@ import { ReadTasksFilterDto } from "./dto/read-tasks-filter.dto";
 import { Task } from "./task.entity";
 import { TaskRepository } from "./task.repository";
 import { InjectRepository } from "@nestjs/typeorm";
+import { TaskStatus } from "./task-status.enum";
 
 @Injectable()
 export class TasksService {
@@ -20,17 +21,11 @@ export class TasksService {
     return found;
   }
 
-  /* createNewTask({ title, description }: CreateNewTaskDto): Task {
-    const task: Task = {
-      id: uuidv1(),
-      title,
-      description,
-      status: TaskStatus.OPEN,
-    };
-    this.tasks.push(task);
-    return task;
+  createNewTask(newTaskDto: CreateNewTaskDto): Promise<Task> {
+    return this.taskRepository.createNewTask(newTaskDto);
   }
 
+  /*
   readAllTasks(): Task[] {
     return this.tasks;
   }
@@ -47,14 +42,6 @@ export class TasksService {
       );
     }
     return tasks;
-  }
-
-  readTaskById(id: string): Task {
-    const found = this.tasks.find(task => task.id === id);
-    if (!found) {
-      throw new NotFoundException(`Task with id: ${id} not found`);
-    }
-    return found;
   }
 
   updateTaskStatusById(id: string, status: TaskStatus): Task {

@@ -21,11 +21,11 @@ import { Task } from "./task.entity";
 export class TasksController {
   constructor(private tasksService: TasksService) {}
 
-  /* @Post()
+  @Post()
   @UsePipes(ValidationPipe)
-  createNewTask(@Body() newTaskDto: CreateNewTaskDto): Task {
+  createNewTask(@Body() newTaskDto: CreateNewTaskDto): Promise<Task> {
     return this.tasksService.createNewTask(newTaskDto);
-  } */
+  }
 
   /* @Get()
   readTasks(@Query(ValidationPipe) filterDto: ReadTasksFilterDto): Task[] {
