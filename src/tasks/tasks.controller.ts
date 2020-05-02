@@ -9,7 +9,6 @@ import {
   Query,
   UsePipes,
   ValidationPipe,
-  ParseIntPipe,
 } from "@nestjs/common";
 import { TasksService } from "./tasks.service";
 import { CreateNewTaskDto } from "./dto/create-new-task.dto";
@@ -34,20 +33,20 @@ export class TasksController {
   }
 
   @Get("/:id")
-  readTaskById(@Param("id", ParseIntPipe) id: number): Promise<Task> {
+  readTaskById(@Param("id") id: string): Promise<Task> {
     return this.tasksService.readTaskById(id);
   }
 
   @Patch("/:id/status")
   updateTaskStatusById(
-    @Param("id", ParseIntPipe) id: number,
+    @Param("id") id: string,
     @Body("status", TaskStatusValidationPipe) status: TaskStatus,
   ): Promise<Task> {
     return this.tasksService.updateTaskStatusById(id, status);
   }
 
   @Delete("/:id")
-  deleteTaskById(@Param("id", ParseIntPipe) id: number): Promise<void> {
+  deleteTaskById(@Param("id") id: string): Promise<void> {
     return this.tasksService.deleteTaskById(id);
   }
 }
