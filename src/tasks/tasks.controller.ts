@@ -18,6 +18,8 @@ import { ReadTasksFilterDto } from "./dto/read-tasks-filter.dto";
 import { TaskStatusValidationPipe } from "./pipes/task-status-validation.pipe";
 import { Task } from "./task.entity";
 import { TaskStatus } from "./task-status.enum";
+import { User } from "../auth/user.entity";
+import { ReadUser } from "../auth/read-user.decorator";
 
 @Controller("/tasks")
 @UseGuards(AuthGuard())
@@ -26,8 +28,11 @@ export class TasksController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  createNewTask(@Body() newTaskDto: CreateNewTaskDto): Promise<Task> {
-    return this.tasksService.createNewTask(newTaskDto);
+  createNewTask(
+    @Body() newTaskDto: CreateNewTaskDto,
+    @ReadUser() user: User,
+  ): Promise<Task> {
+    return this.tasksService.createNewTask(newTaskDto, user);
   }
 
   @Get()

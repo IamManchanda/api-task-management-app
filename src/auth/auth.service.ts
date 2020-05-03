@@ -9,9 +9,7 @@ import { JwtAccessToken } from "./jwt-access-token-interface";
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(UserRepository)
-    private userRepository: UserRepository,
-
+    @InjectRepository(UserRepository) private userRepository: UserRepository,
     private jwtService: JwtService,
   ) {}
 
