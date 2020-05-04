@@ -22,7 +22,7 @@ export class AuthService {
       credentialsDto,
     );
     if (!username) {
-      throw new UnauthorizedException("Invalid Credentials");
+      throw new UnauthorizedException("Invalid Credentials.");
     }
     const payload: JwtPayload = { username };
     const accessToken = await this.jwtService.sign(payload);
