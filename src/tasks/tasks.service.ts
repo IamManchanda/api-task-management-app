@@ -24,7 +24,7 @@ export class TasksService {
     });
     if (!found) {
       throw new NotFoundException(
-        `Task with id: ${id} of user ${user.username} not found.`,
+        `Task with id: ${id} for user ${user.username} not found.`,
       );
     }
     return found;
@@ -45,11 +45,11 @@ export class TasksService {
     return task;
   }
 
-  async deleteTaskById(id: string): Promise<void> {
-    const result = await this.taskRepository.delete(id);
+  async deleteTaskById(id: string, user: User): Promise<void> {
+    const result = await this.taskRepository.delete({ id, userId: user.id });
     if (result.affected === 0) {
       throw new NotFoundException(
-        `Task with id: ${id} not found for deleting the task.`,
+        `Task with id: ${id} for user ${user.username} not found for deleting the task.`,
       );
     }
   }
