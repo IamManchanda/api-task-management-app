@@ -44,17 +44,17 @@ export class TasksController {
   }
 
   @Get("/:id")
-  readTaskById(@Param("id") id: string): Promise<Task> {
-    return this.tasksService.readTaskById(id);
+  readTaskById(@Param("id") id: string, @ReadUser() user: User): Promise<Task> {
+    return this.tasksService.readTaskById(id, user);
   }
 
-  @Patch("/:id/status")
+  /* @Patch("/:id/status")
   updateTaskStatusById(
     @Param("id") id: string,
     @Body("status", TaskStatusValidationPipe) status: TaskStatus,
   ): Promise<Task> {
     return this.tasksService.updateTaskStatusById(id, status);
-  }
+  } */
 
   @Delete("/:id")
   deleteTaskById(@Param("id") id: string): Promise<void> {
