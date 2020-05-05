@@ -4,9 +4,12 @@ import { CreateNewTaskDto } from "./dto/create-new-task.dto";
 import { TaskStatus } from "./task-status.enum";
 import { ReadTasksFilterDto } from "./dto/read-tasks-filter.dto";
 import { User } from "../auth/user.entity";
+import { Logger, InternalServerErrorException } from "@nestjs/common";
 
 @EntityRepository(Task)
 export class TaskRepository extends Repository<Task> {
+  private logger = new Logger("TaskRepository");
+
   async readTasks(
     { status, search }: ReadTasksFilterDto,
     user: User,
@@ -22,8 +25,18 @@ export class TaskRepository extends Repository<Task> {
         { search: `%${search}%` },
       );
     }
-    const tasks = await query.getMany();
-    return tasks;
+    try {
+      const tasks = await query.getMany();
+      return tasks;
+    } catch (error) {
+      this.logger.error(
+        `Failed to get tasks for the user ${
+          user.username
+        }, with filters: ${JSON.stringify({ status, search })}`,
+        error.stack,
+      );
+      throw new InternalServerErrorException();
+    }
   }
 
   async createNewTask(
@@ -35,8 +48,21 @@ export class TaskRepository extends Repository<Task> {
     task.description = description;
     task.status = TaskStatus.OPEN;
     task.user = user;
-    await task.save();
-    delete task.user;
-    return task;
+    try {
+      await task.save();
+      delete task.user;
+      return task;
+    } catch (error) {
+      this.logger.error(
+        `Failed to create new task for the user ${
+          user.username
+        }. Requested data for creation: ${JSON.stringify({
+          title,
+          description,
+        })}`,
+        error.stack,
+      );
+      throw new InternalServerErrorException();
+    }
   }
 }
