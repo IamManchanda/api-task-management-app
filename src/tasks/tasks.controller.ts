@@ -36,8 +36,11 @@ export class TasksController {
   }
 
   @Get()
-  readTasks(@Query(ValidationPipe) filterDto: ReadTasksFilterDto) {
-    return this.tasksService.readTasks(filterDto);
+  readTasks(
+    @Query(ValidationPipe) filterDto: ReadTasksFilterDto,
+    @ReadUser() user: User,
+  ) {
+    return this.tasksService.readTasks(filterDto, user);
   }
 
   @Get("/:id")

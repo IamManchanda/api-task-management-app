@@ -14,8 +14,8 @@ export class TasksService {
     private taskRepository: TaskRepository,
   ) {}
 
-  readTasks(filterDto: ReadTasksFilterDto): Promise<Task[]> {
-    return this.taskRepository.readTasks(filterDto);
+  readTasks(filterDto: ReadTasksFilterDto, user: User): Promise<Task[]> {
+    return this.taskRepository.readTasks(filterDto, user);
   }
 
   async readTaskById(id: string): Promise<Task> {
