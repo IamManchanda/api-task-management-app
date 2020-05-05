@@ -34,12 +34,16 @@ export class TasksService {
     return this.taskRepository.createNewTask(newTaskDto, user);
   }
 
-  /* async updateTaskStatusById(id: string, status: TaskStatus): Promise<Task> {
-    const task = await this.readTaskById(id);
+  async updateTaskStatusById(
+    id: string,
+    status: TaskStatus,
+    user: User,
+  ): Promise<Task> {
+    const task = await this.readTaskById(id, user);
     task.status = status;
     await task.save();
     return task;
-  } */
+  }
 
   async deleteTaskById(id: string): Promise<void> {
     const result = await this.taskRepository.delete(id);

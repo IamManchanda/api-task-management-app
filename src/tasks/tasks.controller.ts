@@ -48,13 +48,14 @@ export class TasksController {
     return this.tasksService.readTaskById(id, user);
   }
 
-  /* @Patch("/:id/status")
+  @Patch("/:id/status")
   updateTaskStatusById(
     @Param("id") id: string,
     @Body("status", TaskStatusValidationPipe) status: TaskStatus,
+    @ReadUser() user: User,
   ): Promise<Task> {
-    return this.tasksService.updateTaskStatusById(id, status);
-  } */
+    return this.tasksService.updateTaskStatusById(id, status, user);
+  }
 
   @Delete("/:id")
   deleteTaskById(@Param("id") id: string): Promise<void> {
