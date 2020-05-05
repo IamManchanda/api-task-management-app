@@ -1,6 +1,6 @@
 # API: Task Managment App with Nest.js
 
-API Repository for Task Managment App.
+API Repository for Task Managment App (TypeScript, Node & PostgreSQL).
 
 ## Installation
 
@@ -8,15 +8,14 @@ API Repository for Task Managment App.
 $ npm install
 ```
 
-## Running the app
+## Running the app (development)
+
+Replace `MY_PASS` with your local PostgreSQL Password
 
 ```bash
 # development
-$ npm run start
+$ LDB_PASSWORD=MY_PASS npm run start
 
 # watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+$ LDB_PASSWORD=MY_PASS npm run start:dev
 ```
