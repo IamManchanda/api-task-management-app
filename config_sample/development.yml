@@ -1,0 +1,15 @@
+server:
+  port: 3000
+
+db:
+  type: "postgres"
+  port: 5432
+  database: "db_task_management_app"
+  host: localhost
+  username: "postgres"
+  password: "top_password"
+  synchronize: true
+
+jwt:
+  expiresIn: 3000
+  secret: "top_secret"

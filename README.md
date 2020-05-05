@@ -10,12 +10,13 @@ $ npm install
 
 ## Running the app (development)
 
-Replace `MY_PASS` with your local PostgreSQL database password.
+1. Replace `config_sample` folder with `config`.
+2. Change any configuration from `config/development.yml` based on your environment setup. Example, changing `db.password` to the password you have in your local PostgreSQL database.
 
 ```bash
 # development
-$ LDB_PASSWORD=MY_PASS npm run start
+$ npm run start
 
 # watch mode
-$ LDB_PASSWORD=MY_PASS npm run start:dev
+$ npm run start:dev
 ```
