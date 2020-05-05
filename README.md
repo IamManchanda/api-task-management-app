@@ -10,7 +10,7 @@ $ npm install
 
 ## Running the app (development)
 
-Replace `MY_PASS` with your local PostgreSQL Password
+Replace `MY_PASS` with your local PostgreSQL database password.
 
 ```bash
 # development
