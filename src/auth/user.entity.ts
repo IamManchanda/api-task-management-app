@@ -9,7 +9,7 @@ import {
 import * as bcrypt from "bcrypt";
 import { Task } from "../tasks/task.entity";
 
-@Entity()
+@Entity({ name: "users" })
 @Unique(["username"])
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")

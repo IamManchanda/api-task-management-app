@@ -8,7 +8,7 @@ import {
 import { TaskStatus } from "./task-status.enum";
 import { User } from "../auth/user.entity";
 
-@Entity()
+@Entity({ name: "tasks" })
 export class Task extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
