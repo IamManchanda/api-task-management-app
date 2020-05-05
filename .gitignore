@@ -35,6 +35,3 @@ lerna-debug.log*
 
 # ORM Config
 ormconfig.json
-
-# Rough files
-rough/
