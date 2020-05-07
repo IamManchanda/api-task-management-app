@@ -1,5 +1,8 @@
 server:
-  origin: https://web-task-management-app.jamstack.xyz
+  origin:
+    - https://d3isjt3m9yfb1u.cloudfront.net
+    - https://web-task-management-app.jamstack.xyz
+    - https://todo.jamstack.xyz
 
 db:
   synchronize: false
