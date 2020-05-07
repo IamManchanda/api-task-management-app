@@ -1,10 +1,11 @@
-# API: Task Managment App with Nest.js
+# API Back-end: Task Managment App
 
-API Repository for Task Managment App (TypeScript, Node & PostgreSQL).
+API Back-end Repository for Task Managment App (TypeScript, Node & PostgreSQL).
 
 ## Installation
 
 ```bash
+# setup
 $ npm install
 ```
 
