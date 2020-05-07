@@ -2,6 +2,9 @@
 /dist
 /node_modules
 
+# Elastic Beanstalk Zips
+/eb-zips
+
 # Logs
 logs
 *.log
