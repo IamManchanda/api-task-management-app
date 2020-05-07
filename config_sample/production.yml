@@ -1,2 +1,5 @@
+server:
+  origin: https://web-task-management-app.jamstack.xyz
+
 db:
   synchronize: false
