@@ -1,6 +1,6 @@
 {
   "name": "api-task-management-app",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "API: Task Managment App with Nest.js",
   "author": "",
   "private": true,
