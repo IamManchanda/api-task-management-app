@@ -5,9 +5,9 @@ import { ReadTasksFilterDto } from "./dto/read-tasks-filter.dto";
 import { TaskStatus } from "./task-status.enum";
 import { NotFoundException } from "@nestjs/common";
 
-const mockTaskId = 1;
+const mockTaskId = "ce9401f4-1b86-4b12-9955-c9936e93fe43";
 const mockUser = {
-  id: 12,
+  id: "f6a24882-2c30-46d0-b87a-f710eb49f317",
   username: "test_user",
 };
 const mockData = {
@@ -21,6 +21,7 @@ const mockTaskRepository = () => ({
   readTasks: jest.fn(),
   findOne: jest.fn(),
   createNewTask: jest.fn(),
+  delete: jest.fn(),
 });
 
 describe("TasksService", () => {
@@ -59,19 +60,20 @@ describe("TasksService", () => {
   describe("readTaskById", () => {
     it("successfully read the task and returns the result if task exists", async () => {
       taskRepository.findOne.mockResolvedValue(mockData);
-      const result = await tasksService.readTaskById(1, mockUser);
+      const result = await tasksService.readTaskById(mockTaskId, mockUser);
       expect(result).toEqual(mockData);
       expect(taskRepository.findOne).toHaveBeenCalledWith({
-        where: { id: mockTaskId, userId: mockUser.id },
+        where: {
+          id: mockTaskId,
+          userId: mockUser.id,
+        },
       });
     });
 
     it("throws an error if task does not exists", () => {
       taskRepository.findOne.mockResolvedValue(null);
       expect(tasksService.readTaskById(mockTaskId, mockUser)).rejects.toThrow(
-        new NotFoundException(
-          `Task with id: ${mockTaskId} for user ${mockUser.username} not found.`,
-        ),
+        NotFoundException,
       );
     });
   });
@@ -86,6 +88,25 @@ describe("TasksService", () => {
         mockUser,
       );
       expect(result).toEqual(mockTask);
+    });
+  });
+
+  describe("deleteTaskById", () => {
+    it("successfully deletes the task if task exists", async () => {
+      taskRepository.delete.mockResolvedValue({ affected: 1 });
+      expect(taskRepository.delete).not.toHaveBeenCalled();
+      await tasksService.deleteTaskById(mockTaskId, mockUser);
+      expect(taskRepository.delete).toHaveBeenCalledWith({
+        id: mockTaskId,
+        userId: mockUser.id,
+      });
+    });
+
+    it("throws an error if task does not exists", () => {
+      taskRepository.delete.mockResolvedValue({ affected: 0 });
+      expect(tasksService.deleteTaskById(mockTaskId, mockUser)).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 });
