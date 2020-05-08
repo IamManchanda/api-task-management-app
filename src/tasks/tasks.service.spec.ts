@@ -3,13 +3,17 @@ import { TasksService } from "./tasks.service";
 import { TaskRepository } from "./task.repository";
 import { ReadTasksFilterDto } from "./dto/read-tasks-filter.dto";
 import { TaskStatus } from "./task-status.enum";
+import { NotFoundException } from "@nestjs/common";
 
+const mockTaskId = 1;
 const mockUser = {
+  id: 12,
   username: "test_user",
 };
 
 const mockTaskRepository = () => ({
   readTasks: jest.fn(),
+  findOne: jest.fn(),
 });
 
 describe("TasksService", () => {
@@ -43,6 +47,31 @@ describe("TasksService", () => {
       const result = await tasksService.readTasks(filters, mockUser);
       expect(taskRepository.readTasks).toHaveBeenCalled();
       expect(result).toEqual(value);
+    });
+  });
+
+  describe("readTaskById", () => {
+    it("successfully read and returns the task if task exists", async () => {
+      const value = {
+        title: "Test task title",
+        description: "Test task description",
+      };
+      taskRepository.findOne.mockResolvedValue(value);
+      const result = await tasksService.readTaskById(1, mockUser);
+      expect(result).toEqual(value);
+
+      expect(taskRepository.findOne).toHaveBeenCalledWith({
+        where: { id: mockTaskId, userId: mockUser.id },
+      });
+    });
+
+    it("throws  an error if task does not exists", () => {
+      taskRepository.findOne.mockResolvedValue(null);
+      expect(tasksService.readTaskById(mockTaskId, mockUser)).rejects.toThrow(
+        new NotFoundException(
+          `Task with id: ${mockTaskId} for user ${mockUser.username} not found.`,
+        ),
+      );
     });
   });
 });
