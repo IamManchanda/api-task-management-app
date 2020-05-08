@@ -92,11 +92,11 @@ describe("UserRepository", () => {
     });
   });
 
-  describe("hashUserPassword", () => {
+  describe("hashPassword", () => {
     it("generates a hash for the user password", async () => {
       bcrypt.hash = jest.fn().mockResolvedValue("test_hash");
       expect(bcrypt.hash).not.toHaveBeenCalled();
-      const result = await userRepository.hashUserPassword(
+      const result = await userRepository.hashPassword(
         "test_password",
         "test_salt",
       );
