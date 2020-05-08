@@ -91,6 +91,26 @@ describe("TasksService", () => {
     });
   });
 
+  describe("updateTaskStatusById", () => {
+    it("successfully updates the task", async () => {
+      const save = jest.fn().mockResolvedValue(true);
+      tasksService.readTaskById = jest.fn().mockResolvedValue({
+        status: TaskStatus.OPEN,
+        save,
+      });
+      expect(tasksService.readTaskById).not.toHaveBeenCalled();
+      expect(save).not.toHaveBeenCalled();
+      const result = await tasksService.updateTaskStatusById(
+        mockTaskId,
+        TaskStatus.DONE,
+        mockUser,
+      );
+      expect(tasksService.readTaskById).toHaveBeenCalled();
+      expect(save).toHaveBeenCalled();
+      expect(result.status).toEqual(TaskStatus.DONE);
+    });
+  });
+
   describe("deleteTaskById", () => {
     it("successfully deletes the task if task exists", async () => {
       taskRepository.delete.mockResolvedValue({ affected: 1 });
