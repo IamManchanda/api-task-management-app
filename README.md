@@ -1,6 +1,6 @@
-# API Back-end: Task Managment App
+# Rest API Back-end: Task Managment App
 
-API Back-end Repository for Task Managment App (TypeScript, Node & PostgreSQL).
+Rest API Back-end Repository for Task Managment App (TypeScript, Node & PostgreSQL).
 
 ## Installation
 
